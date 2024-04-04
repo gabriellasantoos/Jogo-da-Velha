@@ -72,42 +72,37 @@ public class JogoDaVelha {
         return false; // Jogada inválida
     }
 
-    // Algoritmo de busca em largura (BFS)
-    public void BFS() {
-    }
+public static void main(String[] args) {
+    // Cria uma nova instância do jogo da velha
+    JogoDaVelha jogo = new JogoDaVelha(); 
+    Scanner scanner = new Scanner(System.in); 
+    char jogadorAtual = 'X'; // Define o jogador atual como 'X'
 
-    // Algoritmo de busca em profundidade (DFS)
-    public void DFS() {
-    }
+    System.out.println("Jogo da Velha\n"); 
+    jogo.exibirTabuleiro(); // Exibe o tabuleiro vazio
 
-    public static void main(String[] args) {
-        JogoDaVelha jogo = new JogoDaVelha();
-        Scanner scanner = new Scanner(System.in);
-        char jogadorAtual = 'X';
+    // Loop principal do jogo
+    while (true) {
+        System.out.println("\nJogador " + jogadorAtual + ", faça sua jogada (linha, coluna):");
+        int coluna = scanner.nextInt(); // Lê a coluna da jogada do jogador atual
+        int linha = scanner.nextInt(); // Lê a linha da jogada do jogador atual
 
-        System.out.println("Jogo da Velha\n");
-        jogo.exibirTabuleiro();
+        // Verifica se a jogada é válida 
+        if (jogo.fazerJogada(coluna, linha, jogadorAtual)) {
+            jogo.exibirTabuleiro(); // Exibe o tabuleiro após a jogada
 
-        while (true) {
-            System.out.println("\nJogador " + jogadorAtual + ", faça sua jogada (linha, coluna):");
-            int coluna = scanner.nextInt();
-            int linha = scanner.nextInt();
-
-            if (jogo.fazerJogada(coluna, linha, jogadorAtual)) {
-                jogo.exibirTabuleiro();
-                if (jogo.verificarVitoria(jogadorAtual)) {
-                    System.out.println("\nJogador " + jogadorAtual + " venceu!");
-                    break;
-                } else if (jogo.tabuleiroCheio()) {
-                    System.out.println("\nEmpate!");
-                    break;
-                }
-                jogadorAtual = (jogadorAtual == 'X') ? 'O' : 'X'; // Troca de jogador
-            } else {
-                System.out.println("\nJogada inválida, tente novamente.");
+            // Verifica se o jogador atual venceu
+            if (jogo.verificarVitoria(jogadorAtual)) {
+                System.out.println("\nJogador " + jogadorAtual + " venceu!"); // Exibe mensagem de vitória
+                break; 
+            } else if (jogo.tabuleiroCheio()) { // Verifica se houve empate
+                System.out.println("\nEmpate!"); // Exibe mensagem de empate
+                break; 
             }
+            jogadorAtual = (jogadorAtual == 'X') ? 'O' : 'X'; // Troca o jogador atual
+        } else {
+            System.out.println("\nJogada inválida, tente novamente."); // Exibe mensagem de jogada inválida
         }
-
-        scanner.close();
     }
-}
+
+    scanner.close(); 
